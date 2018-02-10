@@ -8,9 +8,12 @@
 (function() { // 全局作用域  局部作用域
 	var root = typeof self == 'object' && self.self === self && self || typeof global == 'object' && global.global === global && global || this || {};
 
-	var _ = function() {
+	var push = Array.prototype.push;
+
+	var _ = function(obj) {
 		// console.log(this); // 第一次调用的时候this指向window
 		if (!(this instanceof _)) return new _();
+		this.wap = obj
 	}
 
 	_.uniq = function() {
@@ -45,7 +48,9 @@
 			console.log(name);
 			var fun = obj[name];
 			_.prototype[name] = function() {
-				return fun();
+				var arg = [this.wap];
+				push.apply(arg, arguments); // 合并数组
+				return fun.apply(this, arg);
 			}
 		});
 	}
