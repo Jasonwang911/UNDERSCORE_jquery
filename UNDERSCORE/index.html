@@ -7,5 +7,45 @@
 <body>
 	
 	<script type="text/javascript" src="index.js"></script>
+
+
+	<script type="text/javascript">
+		// uniq 数组去重
+		var  arr = [1,2,3,4,5,2,1,'xxx',{}];
+
+		function uniq(arr) {
+			var result = [];
+			for(var i=0;i<arr.length;i++) {
+				var value = arr[i];
+				if(result.indexOf(value) === -1) {
+					result.push(value)
+				}
+			}
+			return result;
+		}
+
+		function uniq_(array, isSorted, callback) {
+			var res = [];
+			var seen;
+			if(typeof isSorted !== 'boolean') {
+				callback = isSorted;
+				isSorted = false;
+			}
+
+			for(var i=0;i<array.length;i++) {
+				var computed = callback?callback(array[i]):array[i];
+				if(isSorted) {
+					if(!i||seen !== computed) {
+						res.push(computed);
+					}
+				}else if(res.indexOf(computed) === -1) {
+					res.push(computed);
+				}
+			}
+			return res;
+		}
+
+		console.log(uniq_(arr));
+	</script>
 </body>
 </html>
